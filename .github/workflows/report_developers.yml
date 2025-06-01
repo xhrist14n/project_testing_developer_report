@@ -6,6 +6,12 @@ on:
         description: "Report date start(dd/MM/yyyy)"
       report_date_end:
         description: "Report date end(dd/MM/yyyy)"
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+  
 jobs:
   create-report:
     name: "Create report"
