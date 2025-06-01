@@ -37,6 +37,10 @@ jobs:
             CORE_HOURS_END:           "18:00"
 
             TIMEZONE:                 "America/Lima"
+            
+            SHOW_CORRELATION_GRAPHS:   true
+            SHOW_ACTIVITY_TIME_GRAPHS: true
+            
             REPORT_DATE_START:        ${{ inputs.report_date_start }}
             REPORT_DATE_END:          ${{ inputs.report_date_end }}
 
