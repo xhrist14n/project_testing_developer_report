@@ -49,5 +49,5 @@ jobs:
             SHOW_STATS_TYPES:         "timeline, workload, pr-quality, code-review-engagement, response-time"
             APPROVAL_TIME_INTERVALS:  '1=fast,3=medium,5=slow'
             TOP_LIST_AMOUNT:          100
-            REPORT_PERIOD:            hours
+            ##REPORT_PERIOD:            hours
             
