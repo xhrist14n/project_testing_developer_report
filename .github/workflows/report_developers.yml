@@ -46,7 +46,7 @@ jobs:
 
             USE_CHARTS:               true       
 
-            SHOW_STATS_TYPES:         timeline, workload, pr-quality, code-review-engagement, response-time
+            SHOW_STATS_TYPES:         "timeline, workload, pr-quality, code-review-engagement, response-time"
             APPROVAL_TIME_INTERVALS:  1
             TOP_LIST_AMOUNT:          100
             REPORT_PERIOD:            hours
