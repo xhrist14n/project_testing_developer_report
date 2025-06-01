@@ -44,4 +44,10 @@ jobs:
             REPORT_DATE_START:        ${{ inputs.report_date_start }}
             REPORT_DATE_END:          ${{ inputs.report_date_end }}
 
-            USE_CHARTS:               true             
+            USE_CHARTS:               true       
+
+            SHOW_STATS_TYPES:         timeline, workload, pr-quality, code-review-engagement, response-time
+            APPROVAL_TIME_INTERVALS:  1
+            TOP_LIST_AMOUNT:          100
+            REPORT_PERIOD:            hours
+            
