@@ -9,12 +9,12 @@ on:
 
 permissions:
   contents: read
-  pull-requests: read
-  issues: read
+  pull-requests: write
+  issues: write
   
 jobs:
   create-report:
-    name: "Create report"
+    name: "Create Issue Report"
     runs-on: ubuntu-latest
     steps:
       - name: "Run script for analytics"
@@ -22,7 +22,8 @@ jobs:
         with:
             ##  In the case of a personal access token, it needs to be added to the repository's secrets and 
             ##  used in this field.
-            GITHUB_TOKEN:             ${{ secrets.REPORT_TOKEN }} 
+            ##GITHUB_TOKEN:             ${{ secrets.REPORT_TOKEN }} 
+            GITHUB_TOKEN:             ${{ secrets.GITHUB_TOKEN }}
 
             # Make sure to specify the name of the repository where the issue will be created
             GITHUB_REPO_FOR_ISSUE:    project_testing_developer_report 
