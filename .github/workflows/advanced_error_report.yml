@@ -27,7 +27,16 @@ jobs:
 
       - name: "Instalar dependencias"
         run: |
-          pip install PyGithub matplotlib
+          pip install PyGithub matplotlib pandas openpyxl
+          pip install -r .github/scripts/requirements.txt
+          pip install -U PyGithub matplotlib pandas openpyxl
+
+
+      - name: "Configurar Git"
+        run: |
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "xhrist14n@gmail.com"
+            git config --global pull.rebase false
 
       - name: "Generar reporte de errores y predicción"
         env:
@@ -35,7 +44,7 @@ jobs:
           REPORT_DATE_START: ${{ inputs.report_date_start }}
           REPORT_DATE_END: ${{ inputs.report_date_end }}
         run: |
-          python .github/scripts/generate_error_report.py
+            python .github/scripts/generate_error_report.py
 
       - name: "Subir reporte generado"
         uses: actions/upload-artifact@v4
