@@ -71,7 +71,7 @@ with open('error_report.md', 'w', encoding='utf-8') as f:
     for _, row in df.iterrows():
         if row['Errores_CI'] > 0:
             f.write(f"    section {row['Autor']}\n    PR#{int(row['PR'])} :done, {row['Fecha']}, 1d\n")
-    f.write('```\n\n')
+    f.write('\n\n')
     # Predicción simple (tendencia lineal)
     f.write('## Predicción de Errores Futuros\n')
     if not df.empty:

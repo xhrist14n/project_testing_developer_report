@@ -27,7 +27,7 @@ jobs:
 
       - name: "Instalar dependencias"
         run: |
-          pip install PyGithub matplotlib pandas openpyxl
+          pip install PyGithub matplotlib pandas openpyxl 
           pip install -r .github/scripts/requirements.txt
           pip install -U PyGithub matplotlib pandas openpyxl
 
