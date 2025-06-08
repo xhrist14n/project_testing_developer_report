@@ -81,8 +81,7 @@ with open('error_report.md', 'w', encoding='utf-8') as f:
         f.write('    x-axis Fecha\n    y-axis Errores\n')
         for _, row in errores_por_fecha.iterrows():
             f.write(f"    {row['Fecha']} : {row['Errores_CI']}\n")
-        f.write('```
-')
+        f.write("")
     else:
         f.write('No hay datos suficientes para predicción.\n')
 
