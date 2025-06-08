@@ -1,0 +1,55 @@
+name: "Advanced Error Analytics Report"
+on:
+  workflow_dispatch:
+    inputs:
+      report_date_start:
+        description: "Fecha de inicio del reporte (dd/MM/yyyy)"
+      report_date_end:
+        description: "Fecha de fin del reporte (dd/MM/yyyy)"
+
+permissions:
+  contents: write
+  pull-requests: read
+  issues: read
+
+jobs:
+  error-report:
+    name: "Generar reporte avanzado de errores"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repo"
+        uses: actions/checkout@v4
+
+      - name: "Configurar Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: "Instalar dependencias"
+        run: |
+          pip install PyGithub matplotlib
+
+      - name: "Generar reporte de errores y predicción"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPORT_DATE_START: ${{ inputs.report_date_start }}
+          REPORT_DATE_END: ${{ inputs.report_date_end }}
+        run: |
+          python .github/scripts/generate_error_report.py
+
+      - name: "Subir reporte generado"
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-report
+          path: error_report.md
+
+      - name: "Subir reporte Excel generado"
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-report-excel
+          path: error_report.xlsx
+
+      - name: "Verificar reporte generado (opcional)"
+        run: |
+          head -20 error_report.md || echo "No se pudo mostrar el reporte."
+          ls -lh error_report.*
