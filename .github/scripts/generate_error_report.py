@@ -66,10 +66,10 @@ with open('error_report.md', 'w', encoding='utf-8') as f:
     if df.empty:
         f.write('No se encontraron PRs en el rango de fechas.\n')
     else:
-        f.write('| PR | Autor | Fecha | Errores CI | Título |\n')
-        f.write('|----|-------|-------|------------|--------|\n')
+        f.write('| PR \t\t| Autor \t\t| Fecha \t\t| Errores CI \t\t| Título \t\t|\n')
+        f.write('|----\t\t|-------\t\t|-------\t\t|------------\t\t|--------\t\t|\n')
         for _, row in df.iterrows():
-            f.write(f"| [{int(row['PR'])}]({row['URL']}) | {row['Autor']} | {row['Fecha']} | {row['Errores_CI']} | {row['Titulo']} |\n")
+            f.write(f"| [{int(row['PR'])}]({row['URL']}) \t\t| {row['Autor']} \t\t| {row['Fecha']} \t\t| {row['Errores_CI']} \t\t| {row['Titulo']} \t\t|\n")
     f.write('\n')
     # Gráfica Mermaid: Errores en el tiempo
     f.write('## Gráfica de Errores en el Tiempo (Mermaid)\n')
@@ -77,7 +77,7 @@ with open('error_report.md', 'w', encoding='utf-8') as f:
     for _, row in df.iterrows():
         if row['Errores_CI'] > 0:
             f.write(f"    section {row['Autor']}\n    PR#{int(row['PR'])} :done, {row['Fecha']}, 1d\n")
-    f.write('\n\n')
+    f.write('```\n\n')
     # Predicción simple (tendencia lineal)
     f.write('## Predicción de Errores Futuros\n')
     if not df.empty:
@@ -87,7 +87,7 @@ with open('error_report.md', 'w', encoding='utf-8') as f:
         f.write('    x-axis Fecha\n    y-axis Errores\n')
         for _, row in errores_por_fecha.iterrows():
             f.write(f"    {row['Fecha']} : {row['Errores_CI']}\n")
-        f.write("")
+        f.write("```\n\n")
     else:
         f.write('No hay datos suficientes para predicción.\n')
 
