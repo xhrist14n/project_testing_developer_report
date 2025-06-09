@@ -55,8 +55,15 @@ if pr_data:
 else:
     df = pd.DataFrame(columns=['PR','Autor','Fecha','Errores_CI','Titulo','URL'])
 
-# Guardar Excel
+# Guardar Excel principal
 df.to_excel('error_report.xlsx', index=False)
+
+# Generar Excel adicional: Autor vs PRs realizados vs Errores de deploy
+conteo_errores = df.groupby('Autor').agg({
+    'PR': 'count',
+    'Errores_CI': 'sum'
+}).reset_index().rename(columns={'PR': 'PRs_realizados', 'Errores_CI': 'Errores_deploy'})
+conteo_errores.to_excel('error_report_by_author.xlsx', index=False)
 
 # Generar Markdown
 with open('error_report.md', 'w', encoding='utf-8') as f:
@@ -90,5 +97,16 @@ with open('error_report.md', 'w', encoding='utf-8') as f:
         f.write("```\n\n")
     else:
         f.write('No hay datos suficientes para predicción.\n')
+    # Conteo de PRs por programador
+    f.write('## Conteo de PRs por Programador\n\n')
+    if not df.empty:
+        conteo_prs = df.groupby('Autor')['PR'].count().reset_index().sort_values(by='PR', ascending=False)
+        f.write('| Autor | PRs realizados |\n')
+        f.write('|-------|----------------|\n')
+        for _, row in conteo_prs.iterrows():
+            f.write(f"| {row['Autor']} | {row['PR']} |\n")
+        f.write('\n')
+    else:
+        f.write('No hay datos de PRs para mostrar.\n')
 
 print("Reporte generado: error_report.md y error_report.xlsx")

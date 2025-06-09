@@ -55,6 +55,12 @@ jobs:
           name: error-report-excel
           path: error_report.xlsx
 
+      - name: "Subir reporte Excel reporte errores"
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-error-report-excel
+          path: error_report_by_author.xlsx
+
       - name: "Verificar reporte generado (opcional)"
         run: |
           head -20 error_report.md || echo "No se pudo mostrar el reporte."
