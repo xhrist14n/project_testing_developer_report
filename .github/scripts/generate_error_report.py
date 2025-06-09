@@ -29,7 +29,8 @@ repo = g.get_repo(REPO_NAME)
 pulls = repo.get_pulls(state='all', sort='updated', direction='desc')
 pr_data = []
 for pr in pulls:
-    if pr.created_at < date_start or pr.created_at > date_end:
+    pr_created = pr.created_at.replace(tzinfo=None)
+    if pr_created < date_start or pr_created > date_end:
         continue
     # Buscar errores de CI (checks fallidos)
     checks = pr.get_check_runs()
@@ -37,7 +38,7 @@ for pr in pulls:
     pr_data.append({
         'PR': pr.number,
         'Autor': pr.user.login,
-        'Fecha': pr.created_at.strftime('%Y-%m-%d'),
+        'Fecha': pr_created.strftime('%Y-%m-%d'),
         'Errores_CI': len(failed_checks),
         'Titulo': pr.title,
         'URL': pr.html_url
