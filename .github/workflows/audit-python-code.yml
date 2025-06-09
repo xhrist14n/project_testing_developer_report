@@ -1,0 +1,45 @@
+name: Auditoría de Dependencias con pip-audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Nombre de la rama a auditar'
+        required: true
+        default: 'main'
+
+jobs:
+  pip-audit:
+    runs-on: ubuntu-latest
+    name: Auditoría de Seguridad en Python
+
+    steps:
+      - name: Checkout del código en la rama seleccionada
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar pip-audit
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-audit
+
+      - name: Ejecutar pip-audit y guardar resultado
+        id: audit
+        run: |
+          pip-audit > audit_result.txt || true
+          echo "Resultado de la auditoría:"
+          cat audit_result.txt
+
+      - name: Crear issue con resultados de auditoría
+        if: always()
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          title: "Resultado de pip-audit para rama ${{ github.event.inputs.branch }}"
+          content-filepath: ./audit_result.txt
+          labels: seguridad, auditoría
