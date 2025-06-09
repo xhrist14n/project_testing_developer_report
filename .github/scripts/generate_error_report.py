@@ -33,8 +33,13 @@ for pr in pulls:
     if pr_created < date_start or pr_created > date_end:
         continue
     # Buscar errores de CI (checks fallidos)
-    checks = pr.get_check_runs()
-    failed_checks = [c for c in checks if c.conclusion == 'failure']
+git add    sha = pr.head.sha
+    try:
+        commit = repo.get_commit(sha)
+        checks = commit.get_check_runs()
+        failed_checks = [c for c in checks if c.conclusion == 'failure']
+    except Exception:
+        failed_checks = []
     pr_data.append({
         'PR': pr.number,
         'Autor': pr.user.login,
