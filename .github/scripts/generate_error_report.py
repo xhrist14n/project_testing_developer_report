@@ -33,7 +33,7 @@ for pr in pulls:
     if pr_created < date_start or pr_created > date_end:
         continue
     # Buscar errores de CI (checks fallidos)
-git add    sha = pr.head.sha
+    sha = pr.head.sha
     try:
         commit = repo.get_commit(sha)
         checks = commit.get_check_runs()
